@@ -4,21 +4,19 @@ const BotEmbed = require("../classes/BotEmbed");
 const moment = require("moment");
 module.exports = {
   // anything get goes here
-  get_username: async (client, message, silent = false) => {
+  get_username: async (client, message, silent = false, id = false) => {
+    const userID = id ? id : message.author.id;
     const { users } = client.models;
     const user = await users
       .findOne({
-        userID: message.author.id
+        userID
       })
       .lean();
     if (!user) {
       if (!silent) {
-        await client.notify({
-          message,
-          desc:
-            "please set your Last.fm username with the ``&login`` command first.",
-          reply: true
-        });
+        await message.reply(
+          "please set your last.fm username with the ``&login`` command first."
+        );
       }
       return false;
     } else {
@@ -296,6 +294,17 @@ module.exports = {
       return false;
     }
     return album;
+  },
+  get_top_artists: async ({ client, message, user, config }) => {
+    const params = stringify({
+      method: "user.getTopArtists",
+      user: user.username,
+      api_key: client.apikey,
+      limit: config.limit,
+      period: config.period.value,
+      format: "json"
+    });
+    return await fetch(`${client.url}${params}`).then(r => r.json());
   },
   // anything updating goes here
   update_usercrown: async ({
