@@ -15,7 +15,7 @@ class UnbanCommand extends Command {
   async run(client, message, args) {
     const { check_permissions, get_guild_user } = client.helpers;
 
-    const has_required_permissions = check_permissions(client, message);
+    const has_required_permissions = await check_permissions(client, message);
 
     if (!has_required_permissions) return;
 
