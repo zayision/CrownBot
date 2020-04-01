@@ -34,7 +34,7 @@ class WhoKnowsCommand extends Command {
     // checks
     const { check_permissions } = client.helpers;
 
-    const has_required_permissions = check_permissions(message);
+    const has_required_permissions = check_permissions(client, message);
 
     if (!has_required_permissions) return;
 

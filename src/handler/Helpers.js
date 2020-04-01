@@ -466,7 +466,7 @@ module.exports = {
   },
   // anything checking goes here
 
-  check_permissions: async message => {
+  check_permissions: async (client, message) => {
     if (!message.guild.me.hasPermission("MANAGE_MESSAGES")) {
       await client.notify({
         message,
@@ -511,9 +511,9 @@ module.exports = {
     var then = moment.utc(timestamp);
     var now = moment();
 
-    days = now.diff(then, "days");
-    hours = now.subtract(days, "days").diff(then, "hours");
-    minutes = now.subtract(hours, "hours").diff(then, "minutes");
+    let days = now.diff(then, "days");
+    let hours = now.subtract(days, "days").diff(then, "hours");
+    let minutes = now.subtract(hours, "hours").diff(then, "minutes");
 
     const string = `${days > 0 ? days + " day(s)" : ""} ${
       hours > 0 ? hours + " hour(s)" : ""
