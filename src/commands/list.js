@@ -128,9 +128,6 @@ class ListCommand extends Command {
         .setDescription(embed_list);
 
       await message.channel.send(embed);
-
-      console.log(embed_list);
-      return;
     }
   }
 }

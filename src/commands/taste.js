@@ -42,7 +42,6 @@ class TasteCommand extends Command {
     if (!user_one) return;
     const user_two = await get_username(client, message, true, user.id);
     if (!user_two) return;
-    console.log(user_one);
     if (user_one.userID == user_two.userID) {
       await client.notify({
         message,
