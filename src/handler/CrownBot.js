@@ -1,4 +1,4 @@
-const { Client, SnowflakeUtil } = require("discord.js");
+const { Client } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
 const mongoose = require("mongoose");

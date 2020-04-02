@@ -13,20 +13,30 @@ class Command {
     if (this.ownerOnly && message.author.id !== client.ownerID) {
       return;
     }
+    const is_banned = await this.check_ban(client, message);
+    if (is_banned) return;
+
+    try {
+      await this.run(client, message, args);
+      await this.log(message);
+    } catch (e) {
+      console.error(e);
+      await this.log(message, e.stack);
+    }
+  }
+
+  async check_ban(client, message) {
     const { notify } = client.helpers;
-    const is_banned_user = await client.models.bans
+    const ban_log = await client.models.bans
       .findOne({
         userID: message.author.id,
         guildID: { $in: [message.guild.id, "any"] }
       })
       .lean();
+    const is_owner = message.author.id == client.ownerID;
 
-    if (
-      is_banned_user &&
-      this.name !== "about" &&
-      message.author.id !== client.ownerID
-    ) {
-      if (is_banned_user.guildID === "any") {
+    if (ban_log && !is_owner && !this.allow_banned) {
+      if (ban_log.guildID === "any") {
         await notify({
           message,
           title: "Globally banned",
@@ -42,15 +52,9 @@ class Command {
           reply: true
         });
       }
-      return;
+      return true;
     }
-    try {
-      await this.run(client, message, args);
-      await this.log(message);
-    } catch (e) {
-      console.error(e);
-      await this.log(message, e.stack);
-    }
+    return false;
   }
 
   async log(message, stack) {

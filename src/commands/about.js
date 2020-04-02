@@ -9,7 +9,8 @@ class AboutCommand extends Command {
       description:
         "Displays the bot's support server, status, version, maintainer, and invite link.",
       usage: ["about"],
-      aliases: ["invite"]
+      aliases: ["invite"],
+      allow_banned: true
     });
   }
 
