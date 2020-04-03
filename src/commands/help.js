@@ -7,7 +7,7 @@ class HelpCommand extends Command {
       name: "help",
       description: "Lists the available commands.",
       usage: ["help", "help <command>"],
-      aliases: ["h"],
+      aliases: ["commands", "cmds", "h"],
       examples: ["help about", "help wp"]
     });
   }
