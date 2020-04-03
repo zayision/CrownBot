@@ -22,7 +22,8 @@ module.exports = async (client, message) => {
   const args = message.content.slice(server_prefix.length).split(/ +/gi);
   const commandName = args.shift().toLowerCase();
   const command = client.commands.find(
-    x => x.name === commandName || x.aliases.includes(commandName)
+    x =>
+      x.name === commandName || (x.aliases && x.aliases.includes(commandName))
   );
   if (!command) {
     return;

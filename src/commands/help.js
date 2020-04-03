@@ -25,15 +25,9 @@ class HelpCommand extends Command {
           : [command.usage];
         usage = usage.map(e => `\`\`${server_prefix}${e}\`\``);
 
-        var aliases = command.aliases;
-        aliases = aliases.map(e => `\`\`${server_prefix}${e}\`\``);
-        var examples = !command.examples
+        var aliases = !command.aliases
           ? false
-          : command.examples
-              .map(example => {
-                return `\`\`${server_prefix}${example}\`\``;
-              })
-              .join("\n");
+          : command.aliases.map(e => `\`\`${server_prefix}${e}\`\``);
 
         var examples = !command.examples
           ? false
@@ -49,9 +43,9 @@ class HelpCommand extends Command {
           .addField("Usage", usage)
           .addField("Aliases", aliases);
 
-        if (examples) {
-          embed.addField("Examples", examples);
-        }
+        if (aliases) embed.addField("Aliases", aliases);
+        if (examples) embed.addField("Examples", examples);
+
         message.channel.send(embed);
       }
     } else {
