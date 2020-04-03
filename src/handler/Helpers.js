@@ -559,7 +559,36 @@ module.exports = {
     return !!beta_log;
   },
 
-  enable_beta: async (client, message) => {},
+  enable_beta: async (client, message) => {
+    await client.models.optins.findOneAndUpdate(
+      {
+        type: "beta",
+        guild_ID: message.guild.id
+      },
+      {
+        type: "beta",
+        guild_ID: message.guild.id,
+        guild_name: message.guild.name,
+        username: message.author.tag,
+        user_ID: message.author.id,
+        timestamp: `${new Date().toUTCString()}`
+      },
+      {
+        upsert: true,
+        useFindAndModify: false
+      }
+    );
+  },
 
-  disable: async (client, message) => {}
+  disable_beta: async (client, message) => {
+    await client.models.optins.findOneAndRemove(
+      {
+        type: "beta",
+        guild_ID: message.guild.id
+      },
+      {
+        useFindAndModify: false
+      }
+    );
+  }
 };
