@@ -58,6 +58,11 @@ class HelpCommand extends Command {
       let commands = client.commands;
       if (args[0] === "beta") {
         commands = commands.filter(cmd => cmd.beta == true);
+      } else {
+        const is_beta = await client.helpers.check_isbeta(client, message);
+        if (!is_beta) {
+          commands = commands.filter(cmd => cmd.beta !== true);
+        }
       }
       commands
         .filter(e => !e.hidden)
