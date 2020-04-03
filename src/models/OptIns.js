@@ -1,5 +1,6 @@
 module.exports = mongoose => {
   return new mongoose.Schema({
+    type: String,
     guild_ID: {
       type: String,
       unique: true
