@@ -3,7 +3,7 @@ class OptInCommand extends Command {
   constructor() {
     super({
       name: "opt",
-      description: "Opts in server to beta features.",
+      description: "Opts a server in to beta features.",
       usage: ["opt"]
     });
   }
