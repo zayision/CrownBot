@@ -15,7 +15,10 @@ class Command {
     }
     const is_banned = await this.check_ban(client, message);
     if (is_banned) return;
-
+    if (this.beta) {
+      const is_beta = await client.helpers.check_isbeta(client, message);
+      if (!is_beta) return;
+    }
     try {
       await this.run(client, message, args);
       await this.log(message);
