@@ -15,7 +15,7 @@ class HelpCommand extends Command {
   async run(client, message, args) {
     const server_prefix = client.getCachedPrefix(message);
 
-    if (args[0]) {
+    if (args[0] && args[0] !== "beta") {
       const command = client.commands
         .filter(e => !e.hidden)
         .find(x => x.name === args[0] || x.aliases.includes(args[0]));
@@ -56,8 +56,11 @@ class HelpCommand extends Command {
             server_prefix +
             "``."
         );
-
-      client.commands
+      let commands = client.commands;
+      if (args[0] === "beta") {
+        commands = commands.filter(cmd => cmd.beta == true);
+      }
+      commands
         .filter(e => !e.hidden)
         .forEach(command => {
           var usage = Array.isArray(command.usage)
