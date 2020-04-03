@@ -8,7 +8,22 @@ class BetaCommand extends Command {
     });
   }
 
-  async run(client, message, args) {}
+  async run(client, message) {
+    const { enable_beta, disable_beta, check_isbeta } = client.helpers;
+    if (!message.member.hasPermission("MANAGE_GUILD")) {
+      await client.notify({
+        message,
+        desc:
+          "you do not have the permission (``MANAGE_GUILD``) to execute this command.",
+        reply: true
+      });
+      return;
+    }
+    const is_beta = check_isbeta(client, message);
+
+    if (is_beta) {
+    }
+  }
 }
 
 module.exports = BetaCommand;

@@ -479,16 +479,6 @@ module.exports = {
     return true;
   },
 
-  check_isbeta: async (client, message) => {
-    const beta_log = client.models.optins
-      .findOne({
-        type: "beta",
-        guild_ID: message.guild.id
-      })
-      .lean();
-    return !!beta_log;
-  },
-
   // anything parsing goes here
   parse_artistinfo: artist => {
     if (!artist) return false;
@@ -556,5 +546,20 @@ module.exports = {
     }
     sent_message = await message.channel.send(embed);
     return sent_message;
-  }
+  },
+
+  // beta-related helpers
+  check_isbeta: async (client, message) => {
+    const beta_log = client.models.optins
+      .findOne({
+        type: "beta",
+        guild_ID: message.guild.id
+      })
+      .lean();
+    return !!beta_log;
+  },
+
+  enable_beta: async (client, message) => {},
+
+  disable: async (client, message) => {}
 };
