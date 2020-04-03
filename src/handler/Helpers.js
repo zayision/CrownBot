@@ -479,6 +479,8 @@ module.exports = {
     return true;
   },
 
+  check_isbeta: async (client, message) => {},
+
   // anything parsing goes here
   parse_artistinfo: artist => {
     if (!artist) return false;
