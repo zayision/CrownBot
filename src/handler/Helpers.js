@@ -479,7 +479,15 @@ module.exports = {
     return true;
   },
 
-  check_isbeta: async (client, message) => {},
+  check_isbeta: async (client, message) => {
+    const beta_log = client.models.optins
+      .findOne({
+        type: "beta",
+        guild_ID: message.guild.id
+      })
+      .lean();
+    return !!beta_log;
+  },
 
   // anything parsing goes here
   parse_artistinfo: artist => {
