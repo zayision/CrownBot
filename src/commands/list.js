@@ -22,7 +22,7 @@ class ListCommand extends Command {
 
   async run(client, message, args) {
     const server_prefix = client.getCachedPrefix(message);
-    const { get_username, get_top_artists } = client.helpers;
+    const { get_username, get_top_artists, get_top_songs } = client.helpers;
     const user = await get_username(client, message);
     if (!user) return;
     let config = {
@@ -128,6 +128,32 @@ class ListCommand extends Command {
         )
         .setDescription(embed_list);
 
+      await message.channel.send(embed);
+    } else if (config.type === "song") {
+      const { toptracks } = await get_top_songs({
+        client,
+        message,
+        user,
+        config
+      });
+      if (!toptracks) {
+        message.reply(
+          "something went wrong while trying to get info from Last.fm."
+        );
+        return;
+      }
+
+      const embed_list = toptracks.track
+        .map(track => {
+          return `${track["@attr"].rank}. **${track.name}** by **${track.artist.name}**— **${track.playcount}** plays`;
+        })
+        .join("\n");
+
+      const embed = new BotEmbed(message)
+        .setTitle(
+          `${message.author.username}'s ${config.period.text}-top ${config.type}s`
+        )
+        .setDescription(embed_list);
       await message.channel.send(embed);
     }
   }

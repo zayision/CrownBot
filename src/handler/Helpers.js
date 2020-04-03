@@ -306,6 +306,17 @@ module.exports = {
     });
     return await fetch(`${client.url}${params}`).then(r => r.json());
   },
+  get_top_songs: async ({ client, user, config }) => {
+    const params = stringify({
+      method: "user.getTopTracks",
+      user: user.username,
+      api_key: client.apikey,
+      limit: config.limit,
+      period: config.period.value,
+      format: "json"
+    });
+    return await fetch(`${client.url}${params}`).then(r => r.json());
+  },
   // anything updating goes here
   update_usercrown: async ({
     client,
