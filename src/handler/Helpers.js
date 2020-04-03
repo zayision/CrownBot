@@ -295,7 +295,7 @@ module.exports = {
     }
     return album;
   },
-  get_top_artists: async ({ client, message, user, config }) => {
+  get_top_artists: async ({ client, user, config }) => {
     const params = stringify({
       method: "user.getTopArtists",
       user: user.username,
@@ -364,7 +364,7 @@ module.exports = {
   },
 
   update_prefix: async ({ client, message, prefix }) => {
-    const { guild, author } = message;
+    const { guild } = message;
     const re = /^\S{1,4}$/g;
     if (!prefix.match(re)) {
       await message.reply("invalid prefix.");
@@ -550,7 +550,7 @@ module.exports = {
 
   // beta-related helpers
   check_isbeta: async (client, message) => {
-    const beta_log = client.models.optins
+    const beta_log = await client.models.optins
       .findOne({
         type: "beta",
         guild_ID: message.guild.id

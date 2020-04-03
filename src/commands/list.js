@@ -6,7 +6,8 @@ class ListCommand extends Command {
       name: "list",
       description:
         "Lists user's weekly, monthly, or yearly top artists or songs.",
-      usage: [
+      usage: "list <type> <period>",
+      examples: [
         "list artist weekly",
         "list song weekly",
         "list artist alltime",

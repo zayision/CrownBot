@@ -40,8 +40,7 @@ class HelpCommand extends Command {
         const embed = new BotEmbed(message)
           .setTitle(command.name)
           .setDescription(command.description)
-          .addField("Usage", usage)
-          .addField("Aliases", aliases);
+          .addField("Usage", usage);
 
         if (aliases) embed.addField("Aliases", aliases);
         if (examples) embed.addField("Examples", examples);
@@ -52,9 +51,9 @@ class HelpCommand extends Command {
       const embed = new BotEmbed(message)
         .setTitle("Commands")
         .setDescription(
-          "This is a list of the commands this bot offers. The prefix is ``" +
-            server_prefix +
-            "``."
+          `This is a list of the${
+            args[0] === "beta" ? " __beta__" : ""
+          } commands this bot offers. The prefix is \`${server_prefix}\`.`
         );
       let commands = client.commands;
       if (args[0] === "beta") {
@@ -71,7 +70,11 @@ class HelpCommand extends Command {
           var all_commands = [usage, ...aliases]
             .map(e => "``" + server_prefix + e + "``")
             .join(" or ");
-          embed.addField(`${all_commands}`, command.description, true);
+          embed.addField(
+            `${all_commands}`,
+            (command.beta ? "(:warning: Beta) " : "") + command.description,
+            true
+          );
         });
       message.channel.send(embed);
     }

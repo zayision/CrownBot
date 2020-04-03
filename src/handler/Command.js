@@ -7,6 +7,8 @@ class Command {
     this.hidden = options.hidden;
     this.ownerOnly = options.ownerOnly;
     this.examples = options.examples;
+    this.beta = options.beta;
+    this.allow_banned = options.allow_banned;
   }
 
   async execute(client, message, args) {

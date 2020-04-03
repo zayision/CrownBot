@@ -20,20 +20,20 @@ class BetaCommand extends Command {
       });
       return;
     }
-    const is_beta = check_isbeta(client, message);
+    const is_beta = await check_isbeta(client, message);
 
     if (!is_beta) {
       await enable_beta(client, message);
       await client.notify({
         message,
-        desc: `thanks! ^^; Beta features have been enabled in this server—run ``${server_prefix}beta`` again to disable; see \`\`${server_prefix}commands beta\`\` for the list of available beta commands.`,
+        desc: `thanks! ^^; Beta features have been enabled in this server—run \`\`${server_prefix}beta\`\` again to disable; see \`\`${server_prefix}commands beta\`\` for the list of available beta commands.`,
         reply: true
       });
     } else {
       await disable_beta(client, message);
       await client.notify({
         message,
-        desc: `beta features have been disabled in this server; run ``${server_prefix}beta`` again to enable.`,
+        desc: `beta features have been disabled in this server; run \`\`${server_prefix}beta\`\` again to enable.`,
         reply: true
       });
     }
